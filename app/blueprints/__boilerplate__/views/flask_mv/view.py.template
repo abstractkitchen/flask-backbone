@@ -1,0 +1,19 @@
+# https://flask.palletsprojects.com/en/2.1.x/views/#method-based-dispatching
+
+from flask.views import MethodView
+from flask import jsonify, request
+
+
+class $view_name(MethodView):
+
+    def get(self):
+        # current_app.config.get("MY_CONFIG_VARIABLE")
+
+        return jsonify({
+            "hello": "world"
+        })
+
+    def post(self):
+        return jsonify({
+            "created": True
+        })

@@ -1,0 +1,20 @@
+# Learn more here: https://flask.palletsprojects.com/en/2.1.x/views/#method-hints
+
+from flask import request, current_app, render_template
+from flask.views import View
+
+
+class $view_name(View):
+    methods = ["GET"]
+
+    def dispatch_request(self):
+        # current_app.config.get("MY_CONFIG_VARIABLE")
+
+        context = {
+            "hello": "world"
+        }
+
+        return render_template(
+            "$blueprint_name.jinja2",
+            **context
+        )

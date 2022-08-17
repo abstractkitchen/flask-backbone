@@ -1,0 +1,23 @@
+from flask import Blueprint, current_app, render_template
+
+
+# do not rename "blueprint" variable if you want to use auto import
+blueprint = Blueprint(
+    '$blueprint_name',
+    __name__,
+    template_folder='templates'
+)
+
+
+@blueprint.route("$url_rule", methods=["GET"])
+def $blueprint_name_route():  # << TODO: reminder to edit me
+    # current_app.config.get("MY_CONFIG_VARIABLE")
+    context = {
+        "hello": "world"
+    }
+
+    return render_template(
+        "$blueprint_name.jinja2",
+        **context
+    )
+

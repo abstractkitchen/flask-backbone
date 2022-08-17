@@ -1,0 +1,14 @@
+from flask import Blueprint
+
+from app.blueprints.$blueprint_name.views.$blueprint_name import $view_name
+
+
+blueprint = Blueprint(
+    '$blueprint_name',
+    __name__,
+    template_folder='templates'
+)
+
+
+# todo: set unique name for as_view('<name>') it will be used in flask.url_for()
+blueprint.add_url_rule('$url_rule', view_func=$view_name.as_view('myview'))

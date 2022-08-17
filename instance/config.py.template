@@ -1,0 +1,2 @@
+SECRET_KEY = ""
+# SQLALCHEMY_DATABASE_URI = "postgresql://user:password@localhost:5432/database"

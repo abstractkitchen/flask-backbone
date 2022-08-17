@@ -1,0 +1,10 @@
+{% extends 'layouts/main.jinja2' %}
+
+{% block content %}
+  <p>Hello. Welcome to your index page.</p>
+  <p><a href="{{ url_for("about.about_page") }}">About me</a></p>
+
+  <p></p>
+  <p>This value defined in <i>app/jinja/context_processor.py</i>: {{ application_name }}</p>
+
+{% endblock %}
