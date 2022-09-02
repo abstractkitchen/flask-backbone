@@ -17,7 +17,29 @@
 - Initial setup with a configuration script.
 - WSGI config
 
+## Getting Started
+
+**1 — Clone flask-backbone.**
+
+`git clone https://github.com/abstractkitchen/flask-backbone.git .`
+
+**2** — As a rule of thumb, make sure that you use a virtual environment. For example python3 -m venv pythonenv. This will create an environment in the folder pythonenv. I prefer to name my python environment as a pythonenv, because it's more descriptive.
+
+`python3 -m venv pythonenv`
+
+`. pythonenv/bin/activate`
+
+`pip install -r requirements.txt`
+
+**3** — Launch configure.py. It will ask you some question about your future setup.
+`python configure.py`
+
+This utility will create: .env, alembic.ini and instance/config.py.
+
+Note: if you're using port other than 5000, then don't forget to update your SERVER_NAME in the config/development.py.
+
 ## Usage
+Please read this article. You'll learn more details about the boilerplate and Flask.
 
 [Read about usage on my website](https://abstractkitchen.com/blog/flask-backbone/).
 
