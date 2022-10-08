@@ -15,6 +15,7 @@ SQLALCHEMY_DATABASE_URI = "$sqlalchemy_database_uri"
 """
 
 DOT_ENV_TEXT = """
+export FLASK_DEBUG=1
 export APP_CONFIG=$flask_env
 export FLASK_RUN_PORT=$flask_port
 """
