@@ -1,7 +1,7 @@
 # Flask-Backbone
 #### _Your Next Flask Boilerplate_
 
-![Create sitemaps with Sitemapa](https://abstractkitchen.com/static/assets/flask-backbone-boilerplate.jpg "Flask-Backbone")
+![Create sitemaps with Sitemapa](https://abstractkitchen.com/static/flask-backbone/flask-backbone-boilerplate.jpg "Flask-Backbone")
 
 ## Features
 - Predefined basic structure, so you'll end up with a clean architecture.
