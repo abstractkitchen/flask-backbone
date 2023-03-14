@@ -1,7 +1,7 @@
-from flask import Blueprint, make_response, render_template, current_app
+from flask import Blueprint, make_response, render_template, current_app, Response
 
 
-blueprint = Blueprint(
+blueprint: Blueprint = Blueprint(
     'index',
     __name__,
     template_folder='templates',
@@ -10,7 +10,7 @@ blueprint = Blueprint(
 
 
 @blueprint.route("/", methods=["get"])
-def index_route():
+def index_route() -> Response:
     return make_response(
         render_template(
             "index.jinja2",

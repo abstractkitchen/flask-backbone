@@ -16,20 +16,23 @@ from app.ext.cache import cache
 from app.commands import init_app_cli
 
 
-def init_configuration(app):
+def init_configuration(app: Flask) -> None:
 
     # Load the default configuration
     app.config.from_object('config.default')
 
-    # Load the configuration from the instance folder
-    app.config.from_pyfile('config.py')
+    # load configuration from .env
+    app.config.from_prefixed_env()
 
     # Variables defined here will override those in the default configuration
     app.config.from_object(f"config.{os.environ.get('APP_CONFIG')}")
 
+    # Load the configuration from the instance folder
+    app.config.from_pyfile('config.py')
 
-def create_app():
-    app = Flask(__name__, instance_relative_config=True)
+
+def create_app() -> Flask:
+    app: Flask = Flask(__name__, instance_relative_config=True)
 
     # first, init configurations
     init_configuration(app)
@@ -51,7 +54,7 @@ def create_app():
 
     @app.before_request
     def app_before_request():
-        request_path = request.path
+        request_path: str = request.path
 
         # redirect: example.com/url/ -> example.com/url
         if request_path != '/' and request_path.endswith('/'):

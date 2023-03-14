@@ -3,10 +3,19 @@
 
 ![Create sitemaps with Sitemapa](https://abstractkitchen.com/static/flask-backbone/flask-backbone-boilerplate.jpg "Flask-Backbone")
 
+## UPD: March 15, 2023
+- Removed alembic from the codebase. You can install by yourself.
+- Removed SQLAlchemy extensions to avoid unnecessary complexity in the blueprint. 
+- Added .env support for the application config with from_prefixed_env. Check app.py for the details.
+  - Access FLASK_MY_CONFIG_PROP as app.config.get("MY_CONFIG_PROP"). 
+  - Priorities: .env > config/{env}.py > instance/config.py. Instance folder config is top priority.
+- SQLAlchemy 2 support
+- Added [Python Typing](https://docs.python.org/3/library/typing.html)
+- Moved to Python 3.11
+
 ## Features
 - Predefined basic structure, so you'll end up with a clean architecture.
 - Database support via **SQLAlchemy**. However, you can skip database setup and use Flask-Backbone without the database. I also do not use Flask-SQLAlchemy, but you can.
-- **Alembic** for your database migrations.
 - Development/Production/You own configs with **instance_relative_config**.
 - Cache support via **flask_caching**. Setup easily with configuration.
 - **Flask-Debug**
@@ -18,6 +27,8 @@
 - WSGI config
 
 ## Getting Started
+
+**Note: Tested with Python 3.11**
 
 **1 — Clone flask-backbone.**
 
@@ -34,9 +45,8 @@
 **3** — Launch configure.py. It will ask you some question about your future setup.
 `python configure.py`
 
-This utility will create: .env, alembic.ini and instance/config.py.
+This utility will create: .env and instance/config.py.
 
-Note: if you're using port other than 5000, then don't forget to update your SERVER_NAME in the config/development.py.
 
 ## Usage
 Please read this article. You'll learn more details about the boilerplate and Flask.

@@ -4,7 +4,7 @@ from app.blueprints.about.views.about import AboutView
 from app.blueprints.about.commands import init_blueprint_cli
 
 
-blueprint = Blueprint(
+blueprint: Blueprint = Blueprint(
     'about',
     __name__,
     template_folder='templates'

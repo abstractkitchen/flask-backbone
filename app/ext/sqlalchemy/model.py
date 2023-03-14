@@ -2,12 +2,10 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.dialects.postgresql.base import INTEGER
 
-from app.ext.sqlalchemy.base_query import BaseQuery
-
 from app.utils import camel_to_snake
 
 
-def id_column():
+def id_column() -> Column:
     return Column(
         INTEGER,
         autoincrement=True,
@@ -17,28 +15,8 @@ def id_column():
     )
 
 
-def int_fk_column(foreign_key):
+def int_fk_column(foreign_key) -> Column:
     return Column(INTEGER, ForeignKey(foreign_key))
-
-
-def has_column(cls, column_name):
-    return column_name in list(cls.__table__.columns.keys())
-
-
-def search_i18n(i18n, lang_code):
-    value = None
-
-    if not i18n:
-        return None
-
-    if lang_code not in i18n:
-        if "en" in i18n:
-            value = i18n["en"]
-
-    else:
-        value = i18n[lang_code]
-
-    return value
 
 
 class _BaseModel(object):
@@ -60,11 +38,8 @@ class _BaseModel(object):
 
     """
 
-    query_class = BaseQuery
-    query = None
-
     @declared_attr
-    def __tablename__(cls):
+    def __tablename__(cls) -> str:
         return camel_to_snake(cls.__name__).replace('_model', '')
 
 

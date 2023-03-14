@@ -1,3 +1,4 @@
+import typing as t
 import secrets
 import click
 
@@ -6,8 +7,6 @@ from string import Template
 from app.utils import filesystem
 
 
-ALEMBIC_INI_FILE = "alembic.ini"
-ALEMBIC_INI_TEMPLATE_FILE = "migrations/alembic.ini.template"
 APP_CONFIG_FILE = "instance/config.py"
 INSTANCE_CONFIG_TEXT = """
 SECRET_KEY = "$secret_key"
@@ -15,85 +14,65 @@ SQLALCHEMY_DATABASE_URI = "$sqlalchemy_database_uri"
 """
 
 DOT_ENV_TEXT = """
-export FLASK_DEBUG=1
-export APP_CONFIG=$flask_env
-export FLASK_RUN_PORT=$flask_port
+FLASK_DEBUG=1
+APP_CONFIG=$flask_env
+FLASK_RUN_PORT=$flask_port
 """
 
 
-def ask_for_database_uri():
+def ask_for_database_uri() -> t.Any:
     click.echo(click.style("> Let's add database support:", fg="green", bold=True))
     click.echo("""
         Format: postgresql://<user>:<password>@localhost:5432/<db>\n
         Or leave it empty, if you don't need database support
         """)
+
     return click.prompt("Database URI", default="")
 
 
-def create_instance_config():
-    secret_key = secrets.token_hex()
-    sqlalchemy_database_uri = ask_for_database_uri()
+def create_instance_config() -> str:
+    secret_key: str = secrets.token_hex()
+    sqlalchemy_database_uri: t.Any = ask_for_database_uri()
 
-    variables = {
+    variables: dict = {
         "secret_key": secret_key,
         "sqlalchemy_database_uri": sqlalchemy_database_uri
     }
 
-    filesystem.set_file(APP_CONFIG_FILE, Template(INSTANCE_CONFIG_TEXT).substitute(variables))
+    filesystem.set_file(
+        APP_CONFIG_FILE,
+        Template(INSTANCE_CONFIG_TEXT).substitute(variables)
+    )
 
     click.echo(click.style("[x] %s created." % APP_CONFIG_FILE, fg="green", bold=True))
 
     return sqlalchemy_database_uri
 
 
-def create_alembic_config(sqlalchemy_database_uri):
-    if not len(sqlalchemy_database_uri):
-        sqlalchemy_database_uri = ask_for_database_uri()
-
-    template_file = open(ALEMBIC_INI_TEMPLATE_FILE, "r")
-    filesystem.set_file(ALEMBIC_INI_FILE, Template(template_file.read()).substitute({
-        "sqlalchemy_database_uri": sqlalchemy_database_uri
-    }))
-
-    click.echo(click.style("[x] %s created." % ALEMBIC_INI_FILE, fg="green", bold=True))
-
-    return sqlalchemy_database_uri
-
-
-def create_dot_env():
-    flask_env = click.prompt("APP_CONFIG", default="development")
+def create_dot_env() -> None:
+    flask_env: t.Any = click.prompt("APP_CONFIG", default="development")
 
     if flask_env != "production":
-        flask_port = click.prompt("FLASK_RUN_PORT", default="5000")
+        flask_port: str = click.prompt("FLASK_RUN_PORT", default="5000")
         filesystem.set_file(".env", Template(DOT_ENV_TEXT).substitute({
             "flask_env": flask_env,
             "flask_port": flask_port
         }))
         click.echo(click.style("[x] .env created.", fg="green", bold=True))
 
-        if flask_port != 5000:
-            click.echo(click.style("Don't forget to update SERVER_NAME in config/", fg="green", bold=True))
     else:
         click.echo(click.style("[] .env ignored.", fg="green", bold=True))
 
 
 @click.command()
-def init_config():
+def init_config() -> None:
     click.echo(click.style("*** Starting initial configuration ***", fg="green", bold=True))
-
-    sqlalchemy_database_uri = ""
 
     # instance/config.py
     if filesystem.has_file(APP_CONFIG_FILE):
         click.echo("Looks like you already have %s" % APP_CONFIG_FILE)
     else:
-        sqlalchemy_database_uri = create_instance_config()
-
-    # alembic.ini
-    if filesystem.has_file(ALEMBIC_INI_FILE):
-        click.echo("Looks like you already have %s" % ALEMBIC_INI_FILE)
-    else:
-        create_alembic_config(sqlalchemy_database_uri)
+        create_instance_config()
 
     # .env
     if filesystem.has_file(".env"):

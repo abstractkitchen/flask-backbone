@@ -130,20 +130,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
 # Node
 node_modules/
 
-db.sqlite
 config/config.ini
-
-media-cdn/
-app/static/quizzes
-app/static/quiz-category
-app/static/question
-app/static/article
-app/static/sitemaps
-app/static/postcode-image
 
 alembic.ini
 

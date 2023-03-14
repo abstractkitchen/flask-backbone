@@ -1,11 +1,13 @@
+import typing as t
+
 from app.utils import filesystem
 
 
-IGNORE_FOLDERS = ["__pycache__", "__boilerplate__"]
+IGNORE_FOLDERS: t.List[str] = ["__pycache__", "__boilerplate__"]
 
 
-def list_blueprints(blueprints_folder, cb=None):
-    available_blueprints = \
+def list_blueprints(blueprints_folder: str, cb: t.Union[t.Callable[[str], None], None] = None) -> t.List[str]:
+    available_blueprints: t.List[str] = \
         filesystem.list_directories(blueprints_folder, IGNORE_FOLDERS)
 
     if cb:
@@ -16,10 +18,10 @@ def list_blueprints(blueprints_folder, cb=None):
 
 
 # List available skeletons(aka structure) for future blueprints
-def list_boilerplate_skeletons(boilerplate_folder):
+def list_boilerplate_skeletons(boilerplate_folder: str) -> t.List[str]:
     return filesystem.list_directories(boilerplate_folder + "/skeletons")
 
 
-def list_boilerplate_models(boilerplate_folder):
+def list_boilerplate_models(boilerplate_folder: str) -> t.List[str]:
     return filesystem.list_files(
         boilerplate_folder + "/models", file_extension="py.template")
