@@ -58,6 +58,10 @@ def create_blueprint(skeleton_name: str, view_style: list, name: str, create_mod
     )
     echo_success("[x] Structure created.")
 
+    # 1.1: Create templates folder
+    filesystem.create_folder_if_not(f"{dest_path}/templates/{name}/")
+    echo_success("[x] Templates folder created.")
+
     # 2: Create model
     if create_model:
         model_selection_menu: TerminalMenu = TerminalMenu(
@@ -99,6 +103,7 @@ def create_blueprint(skeleton_name: str, view_style: list, name: str, create_mod
 
     echo_success("[x] Template variables injected.")
     echo_success("All done. Now you can start customizing your newly created blueprint.")
+    echo_success(f"› {dest_path}")
 
 
 @click.command('create-blueprint')
