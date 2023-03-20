@@ -52,6 +52,8 @@ def create_blueprint(skeleton_name: str, view_style: list, name: str, create_mod
 
     # 1: Create blueprint structure
     dest_path: str = os.path.join(os.getcwd(), blueprints_folder, name)
+    templates_path: str = f"{dest_path}/templates/{name}/"
+
     shutil.copytree(
         os.path.join(boilerplate_folder + "/skeletons", skeleton_name),
         dest_path
@@ -59,7 +61,12 @@ def create_blueprint(skeleton_name: str, view_style: list, name: str, create_mod
     echo_success("[x] Structure created.")
 
     # 1.1: Create templates folder
-    filesystem.create_folder_if_not(f"{dest_path}/templates/{name}/")
+    filesystem.create_folder_if_not(templates_path)
+    filesystem.set_file(
+        f"{templates_path}index.jinja2",
+        f"<p>Welcome to your {name} blueprint route.</p>"
+    )
+
     echo_success("[x] Templates folder created.")
 
     # 2: Create model

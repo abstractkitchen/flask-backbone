@@ -17,7 +17,7 @@ def $blueprint_name_route() -> str:  # << TODO: reminder to edit me
     }
 
     return render_template(
-        "$blueprint_name.jinja2",
+        "$blueprint_name/index.jinja2",
         **context
     )
 
